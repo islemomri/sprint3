@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@6.3.0/css/all.min.css">
+    </head>
+    <body>
+      <div *ngIf="role === 'etudiant'">
+        <div class="form-container">
+          <div class="form-floating">
+            <input type="text" class="form-control" id="floatingPassword" placeholder="Entrez le code du cours" [(ngModel)]="courseCode" />
+            <label for="floatingPassword">Rejoindre le cours</label>
+          </div>
+          <button (click)="joinCourse()" class="btn btn-success"><i class="fas fa-plus"></i></button>
+        </div>
+      </div>
+
+      <!-- Affichage des messages de succès et d'erreur -->
+      <div *ngIf="successMessage" class="alert alert-success">
+        {{ successMessage }}
+      </div>
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+
+      <main class="main bd-grid" *ngIf="coursList.length > 0">
+        <div *ngFor="let c of coursList">
+            <article class="card" [routerLink]="['/devoirs','list',c.idCours]" style="cursor: pointer;">
+                <div class="card__img">
+                    <img src="../../../assets/images/cours.png" alt="">
+                </div>
+                <div class="card__name">
+                  <p *ngIf="c.enseignant">{{ c.enseignant.nom }} {{ c.enseignant.prenom }}</p>
+                  <p *ngIf="!c.enseignant">Enseignant non disponible</p>
+                  
+                </div>
+                <div class="card__precis">
+                    <div>
+                        <span class="card__preci card__preci--before"><b>{{c.nom}}</b></span>
+                        <span class="card__preci card__preci--now">Coefficient : {{c.coefficient}}</span>
+                        <span class="card__preci card__preci--now">Credits : {{c.credits}}</span>
+                        <div class="center-container" *ngIf="test">
+                            <button class="primary-cta" [routerLink]="['/cours','update',c.idCours]">
+                                <i class="fa-solid fa-pencil" style="margin-right: 5px;"></i>
+                                Update
+                            </button>
+                            <button class="primary-cta" (click)="onSelectCourse(c.idCours)">
+                                <i class="fa-solid fa-file-upload" style="margin-right: 5px;"></i> Document
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+      </main>
+
+      <!-- ICONS -->
+      <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+    </body>
+</html>

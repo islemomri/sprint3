@@ -1,0 +1,202 @@
+html,body {
+  padding: 20px; /* Espace autour de tout le contenu */
+  margin: 0; /* Supprime les marges par défaut */
+  background-color: #f7f5f1;
+  height: 1000px;
+}
+.success-message {
+  color: green;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.error-message {
+  color: red;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+
+.devoir-container {
+  display: flex;
+  flex-wrap: wrap; /* Permet d'ajuster plusieurs cartes dans une seule ligne */
+  gap: 1.5em; /* Espacement entre les cartes */
+}
+
+.devoir-card {
+  flex: 1 1 calc(50% - 1.5em); /* Prend 50% de la largeur moins l'espacement */
+  box-sizing: border-box;
+  margin-bottom: 1.5em; /* Espace entre les lignes de cartes */
+}
+
+.card {
+  background-color: #f7f3e9; /* Beige clair */
+  border-radius: 0.75em;
+  cursor: pointer;
+  transition: ease 0.2s;
+  box-shadow: 1em 1em 1em #e0dcd0b1, -0.75em -0.75em 1em #ffffff;
+  border: 1.5px solid #f7f3e9;
+}
+
+.card:hover {
+  background-color: #e8e1d0; /* Couleur beige légèrement plus foncée pour le hover */
+  border: 1.5px solid #c8b79e; /* Beige foncé pour le bord quand la carte est survolée */
+}
+
+.container {
+  margin-top: 1.25em;
+  margin-bottom: 1.375em;
+  margin-left: 1.375em;
+  margin-right: 2em;
+  display: flex;
+  flex-direction: row;
+  gap: 0.75em;
+}
+
+.text-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
+  color: #4a3f35; /* Marron foncé pour le texte */
+}
+
+.time {
+  font-size: 0.875em;
+  color: #7f7463; /* Marron clair pour la date */
+}
+
+.text-link {
+  font-weight: 500;
+  text-decoration: none;
+  color: #4a3f35; /* Marron foncé pour les liens */
+}
+
+.button-wrap {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+  align-items: center;
+}
+
+.primary-cta {
+  font-size: 15px;
+  background-color: transparent;
+  font-weight: 600;
+  color: #c8b79e; /* Beige foncé pour les boutons */
+  border: none;
+  border-radius: 1.5em;
+  cursor: pointer;
+}
+
+.primary-cta:hover {
+  text-decoration: underline;
+  color: #a89579; /* Marron clair pour le hover des boutons */
+}
+
+h1 {
+  font-family: 'Arial', sans-serif; /* Choix de police */
+  font-size: 2.5rem; /* Taille du texte */
+  font-weight: bold; /* Épaisseur du texte */
+  color: #5a4a42; /* Couleur beige sombre */
+  text-align: center; /* Centrer le titre */
+  margin-bottom: 1.5rem; /* Espace sous le titre */
+  text-transform: uppercase; /* Majuscules pour chaque lettre */
+  letter-spacing: 0.05em; /* Espacement des lettres */
+  border-bottom: 2px solid #dfd3c3; /* Ligne en dessous du titre */
+  padding-bottom: 0.5rem; /* Espacement intérieur sous le texte */
+}
+
+.button-wrap {
+  display: flex;
+  gap: 1em; /* Espace entre les boutons */
+}
+/* From Uiverse.io by vinodjangid07 */ 
+.card2{
+width: 400px;
+height: fit-content;
+background: rgb(255, 255, 255);
+border-radius: 20px;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+gap: 20px;
+padding: 30px;
+position: relative;
+box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.068);
+}
+.card-content {
+width: 100%;
+height: fit-content;
+display: flex;
+flex-direction: column;
+gap: 5px;
+}
+.card-heading {
+font-size: 20px;
+font-weight: 700;
+color: rgb(27, 27, 27);
+}
+.card-description {
+font-weight: 100;
+color: rgb(102, 102, 102);
+}
+.card-button-wrapper {
+width: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 10px;
+
+}
+.card-button {
+width: 50%;
+height: 35px;
+border-radius: 10px;
+border: none;
+cursor: pointer;
+font-weight: 600;
+}
+.primary {
+background-color: #5a4a42;
+color: white;
+}
+.primary:hover {
+background-color:#5a4a42;
+}
+.secondary {
+background-color: #ddd;
+}
+.secondary:hover {
+background-color: rgb(197, 197, 197);
+}
+.exit-button {
+display: flex;
+align-items: center;
+justify-content: center;
+border: none;
+background-color: transparent;
+position: absolute;
+top: 20px;
+right: 20px;
+cursor: pointer;
+}
+.exit-button:hover svg {
+fill: black;
+}
+.exit-button svg {
+fill: rgb(175, 175, 175);
+}
+/* Popup Overlay */
+.popup-overlay {
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+backdrop-filter: blur(4px); /* Applique un flou à l'arrière-plan */
+display: flex;
+align-items: center;
+justify-content: center;
+z-index: 1000;
+}

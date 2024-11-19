@@ -1,0 +1,22 @@
+<div class="upload-container" >
+  <h2>Upload Document</h2>
+
+  <!-- Affichage du nom du fichier sélectionné -->
+  <div *ngIf="selectedFile">
+    <p><strong>Selected file:</strong> {{ selectedFile.name }}</p>
+  </div>
+
+  <!-- Zone de sélection du fichier -->
+  <input type="file" (change)="onFileSelected($event)" class="file-input" />
+  
+  <!-- Bouton de téléchargement -->
+  <button (click)="onUpload()" [disabled]="isUploading" class="upload-btn">
+    <span *ngIf="isUploading">Uploading...</span>
+    <span *ngIf="!isUploading">Upload</span>
+  </button>
+
+  <!-- Message de feedback -->
+  <div *ngIf="uploadMessage" class="upload-message">
+    <p [ngClass]="{'success': uploadSuccess, 'error': !uploadSuccess}">{{ uploadMessage }}</p>
+  </div>
+</div>

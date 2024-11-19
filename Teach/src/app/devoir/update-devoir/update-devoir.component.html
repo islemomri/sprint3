@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <title>Modifier Devoir</title>
+</head>
+<body style="display: flex; align-items: center; justify-content: center;">
+    <div class="login-page">
+        <div class="form">
+            <form class="login-form" [formGroup]="UpdateDevoirForm" (ngSubmit)="updateDevoir()">
+                <h2><i class="fa-solid fa-pen-to-square"></i> Modifier Devoir</h2>
+                <br>
+                
+     
+        
+      
+  
+        <input type="text" class="form-control" id="prenom" name="prenom" formControlName="prenom" [hidden]="true">
+
+       
+                <input type="text" class="form-control" formControlName="description" name="description" placeholder="Description" required>
+                <input type="number" class="form-control" formControlName="ponderation" placeholder="Ponderation" required>
+                <input type="text" class="form-control" formControlName="bareme" placeholder="Bareme" [readonly]="true" required>
+
+                <div>
+                  <label for="totalDevoir">Devoir sur combien ? :</label>
+                  <input type="number" id="totalDevoir" [(ngModel)]="totalDevoir" name="totalDevoir" min="1" placeholder="Total du devoir" required />
+              </div>
+              
+              <!-- Formulaire pour les exercices -->
+              <h1>Formulaire des Exercices</h1>
+          
+              <!-- Champ pour le nombre d'exercices -->
+              <label for="nombreExercices">Nombre d'exercices :</label>
+              <input type="number" id="nombreExercices" [(ngModel)]="nombreExercices" (input)="onNombreExercicesChange()" min="1" placeholder="Entrez un nombre d'exercices" name="nombreExercices" />
+              <div *ngIf="nombreExercices > 0">
+                <div *ngFor="let exercice of exercices; let i = index">
+                    <label for="exercice{{i + 1}}">Exercice {{i + 1}}:</label>
+                    <input type="text" id="exercice{{i + 1}}" [(ngModel)]="exercices[i].description" name="exercice{{i + 1}}_description" placeholder="Description de l'exercice" required />
+            
+                    <label for="note{{i + 1}}">Note pour l'exercice {{i + 1}} :</label>
+                    <input type="number" id="note{{i + 1}}" [(ngModel)]="exercices[i].note" name="exercice{{i + 1}}_note" min="0" placeholder="Note pour l'exercice {{i + 1}}" />
+            
+                    <!-- Champs pour questions -->
+                    <label for="nombreQuestions{{i + 1}}">Nombre de questions pour l'exercice {{i + 1}} :</label>
+                    <input type="number" id="nombreQuestions{{i + 1}}" [(ngModel)]="exercices[i].nombreQuestions" name="exercice{{i + 1}}_nombreQuestions" min="0" (input)="onNombreQuestionsChange(i)" placeholder="Nombre de questions" />
+            
+                    <div *ngIf="exercices[i].nombreQuestions > 0">
+                        <div *ngFor="let question of exercices[i].questions; let j = index">
+                            <label for="questionNote{{i + 1}}_{{j + 1}}">Note pour la question {{j + 1}}:</label>
+                            <input type="number" id="questionNote{{i + 1}}_{{j + 1}}" [(ngModel)]="exercices[i].questions[j].note" name="exercice{{i + 1}}_questionNote{{j + 1}}" min="0" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+              <div *ngIf="sumOfExerciceNotes() !== totalDevoir" class="alert error">
+                  <i class="fa fa-exclamation-circle"></i>
+                  La somme des notes des exercices ne correspond pas à la note du devoir.
+                  
+              </div>
+          
+
+
+
+
+
+                <input type="date" class="form-control" formControlName="dateLimite" required>
+               <div>
+                    <label>
+                      <input type="radio" formControlName="statut" value="En attente"  required /> En attente
+                    </label>
+                    <label>
+                      <input type="radio" formControlName="statut" value="terminé"  required /> terminé
+                    </label>
+                  </div>
+                  <div>
+                    <label>
+                      <input type="radio" formControlName="typedevoir" value="Examen" required /> Devoir
+                    </label>
+                    <label>
+                      <input type="radio" formControlName="typedevoir" value="Test" required /> Évaluation
+                    </label>
+                  </div>
+                  <input type="number" class="form-control" formControlName="maxDocuments" placeholder="Max Documents" required>
+
+                   <div>
+                    <p-pickList [source]="sousgroupes" [target]="targetSousGroupes" sourceHeader="Les Sous groupes" targetHeader="Selectionnes" [dragdrop]="true" [responsive]="true" 
+                  [sourceStyle]="{height: '10rem'}" [targetStyle]="{ height: '10rem'}" breakpoint="1000px" >
+                  <ng-template let-sg pTemplate="item" >
+                      <div class="flex flex-wrap p-2 align-items-center gap-3" >
+                          <div class="flex-1 flex flex-column gap-2">
+                              <span ><b>Nom</b>{{ sg.nom }}</span>
+                              <br>
+                              
+                              <div class="flex align-items-center gap-2">
+                                  <i class="pi pi-tag text-sm"></i>
+                                  
+                              </div>
+                          </div>
+                          
+                      </div>
+                  </ng-template>
+                </p-pickList>
+                
+                  </div>
+                <br>
+                <button type="submit">Modifier</button>
+            </form>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+</html>

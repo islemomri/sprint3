@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeachHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+        integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body style="display:flex; align-items:center; justify-content:center;">
+    <div class="login-page">
+        <div class="form">
+          <form class="login-form" (ngSubmit)="onSubmit(f)" #f="ngForm">
+            <h2><i class="fa-regular fa-square-plus"></i> Nouveau Devoir </h2>
+            
+            <!-- Champs description, ponderation, maxDocuments -->
+            <input type="text" placeholder="description" class="form-control" name="description" ngModel required />
+            <input type="number" placeholder="ponderation" class="form-control" name="ponderation" ngModel required />
+            <input type="number" placeholder="Max Documents" class="form-control" name="maxDocuments" ngModel required />
+            
+            <!-- Champ pour la note du devoir -->
+            <div>
+                <label for="totalDevoir">Devoir sur combien ? :</label>
+                <input type="number" id="totalDevoir" [(ngModel)]="totalDevoir" name="totalDevoir" min="1" placeholder="Total du devoir" required />
+            </div>
+            
+            <!-- Formulaire pour les exercices -->
+            <h1>Formulaire des Exercices</h1>
+        
+            <!-- Champ pour le nombre d'exercices -->
+            <label for="nombreExercices">Nombre d'exercices :</label>
+            <input type="number" id="nombreExercices" [(ngModel)]="nombreExercices" (input)="onNombreExercicesChange()" min="1" placeholder="Entrez un nombre d'exercices" name="nombreExercices" />
+        
+            <div *ngIf="nombreExercices > 0">
+                <div *ngFor="let exercice of exercices; let i = index">
+                    <label for="exercice{{i + 1}}">Exercice {{i + 1}}:</label>
+                    <input type="text" id="exercice{{i + 1}}" [(ngModel)]="exercices[i].description" name="exercice{{i + 1}}_description" placeholder="Description de l'exercice" required />
+        
+                    <label for="note{{i + 1}}">Note pour l'exercice {{i + 1}} :</label>
+                    <input type="number" id="note{{i + 1}}" [(ngModel)]="exercices[i].note" name="exercice{{i + 1}}_note" min="0" placeholder="Note pour l'exercice {{i + 1}}" />
+
+                    <div *ngIf="sumOfQuestions(i) !== exercices[i].note" class="alert error">
+                        <i class="fa fa-exclamation-triangle"></i>
+                        La somme des notes des questions pour l'exercice {{i + 1}} ne correspond pas à la note de l'exercice.
+                       
+                    </div>
+        
+                    <label for="nombreQuestions{{i + 1}}">Nombre de questions pour l'exercice {{i + 1}} :</label>
+                    <input type="number" id="nombreQuestions{{i + 1}}" [(ngModel)]="exercices[i].nombreQuestions" name="exercice{{i + 1}}_nombreQuestions" min="0" (input)="onNombreQuestionsChange(i)" placeholder="Nombre de questions" />
+        
+                    <div *ngIf="exercices[i].nombreQuestions > 0">
+                        <div *ngFor="let question of exercices[i].questions; let j = index">
+                            <label for="questionNote{{i + 1}}_{{j + 1}}">Note pour la question {{j + 1}}:</label>
+                            <input type="number" id="questionNote{{i + 1}}_{{j + 1}}" [(ngModel)]="exercices[i].questions[j].note" name="exercice{{i + 1}}_questionNote{{j + 1}}" min="0" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="sumOfExerciceNotes() !== totalDevoir" class="alert error">
+                <i class="fa fa-exclamation-circle"></i>
+                La somme des notes des exercices ne correspond pas à la note du devoir.
+                
+            </div>
+        
+            
+            
+            <!-- Statut -->
+            <div>
+                <label><input type="radio" name="statut" value="En attente" ngModel required /> En attente</label>
+                <label><input type="radio" name="statut" value="Terminé" ngModel required /> Terminé</label>
+            </div>
+            <div>
+                <label><input type="radio" name="typedevoir" value="devoir" ngModel required />devoir</label>
+                <label><input type="radio" name="typedevoir" value="evaluation" ngModel required /> evaluation</label>
+            </div>
+
+            <!-- Date Limite -->
+            <input type="date" placeholder="Date Limite" class="form-control" name="dateLimite" ngModel required />
+            <button type="button" (click)="showSousGroupes = !showSousGroupes">
+                {{ showSousGroupes ? 'Masquer Sous-groupes' : 'Ajouter Sous-groupes' }}
+              </button>
+            <!-- PickList pour SousGroupes -->
+            <div *ngIf="showSousGroupes">
+            <p-pickList [source]="sousgroupes" [target]="targetSousGroupes" sourceHeader="Sous groupes" targetHeader="Sélectionnés" [dragdrop]="true">
+                <ng-template let-sg pTemplate="item">
+                    <div class="flex flex-wrap p-2 align-items-center gap-3">
+                        <div class="flex-1 flex flex-column gap-2">
+                            <span><b>Nom</b>{{ sg.nom }}</span>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-pickList>
+        </div>
+<br>
+<br>
+
+            <!-- Bouton de soumission désactivé si la somme des notes des exercices ne correspond pas à la note du devoir -->
+<button type="submit" [disabled]="sumOfExerciceNotes() !== totalDevoir || hasInvalidExerciseNotes()">
+    Ajouter
+</button>
+
+        </form>
+    </div>
+
+

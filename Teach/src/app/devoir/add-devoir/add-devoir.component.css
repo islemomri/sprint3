@@ -1,0 +1,229 @@
+/* Importation de la police */
+@import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500');
+
+/* Body */
+body {
+    background-color: wheat;
+    background-image: linear-gradient(160deg, #a18f67 0%, #b5996f 100%);
+    font-family: 'Poppins', sans-serif;
+    height: 200vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+/* Login Page */
+.login-page {
+    width: 100%;
+    max-width: 750px;
+    margin: 0 auto;
+    padding: 5%;
+    box-sizing: border-box;
+}
+
+.form {
+    background: #FFFFFF;
+    width: 100%;
+    padding: 35px;
+    text-align: center;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.form h2 {
+    font-size: 28px;
+    font-weight: 500;
+    color: #4A90E2;
+    margin-bottom: 20px;
+}
+
+/* Input Styles */
+.form input {
+    font-family: 'Poppins', sans-serif;
+    outline: 0;
+    background: #f9f9f9;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    padding: 15px;
+    font-size: 14px;
+    margin: 15px 0;
+    box-sizing: border-box;
+    transition: border 0.3s ease;
+}
+
+/* Focus state for inputs */
+.form input:focus {
+    border-color: #4A90E2;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+}
+
+/* Button Styles */
+.form button {
+    font-family: 'Poppins', sans-serif;
+    text-transform: uppercase;
+    outline: 0;
+    background: #6d4b14;
+    width: 100%;
+    border: 0;
+    padding: 15px;
+    color: #FFFFFF;
+    border-radius: 7px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Button hover, active, and focus states */
+.form button:hover,
+.form button:active,
+.form button:focus {
+    background-color: #9a8a6f;
+}
+
+/* Message */
+.form .message {
+    margin-top: 15px;
+    color: #b3b3b3;
+    font-size: 14px;
+}
+
+/* Alert Styles */
+.alert {
+    padding: 12px;
+    margin: 20px 0;
+    border-radius: 5px;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.alert.success {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+}
+
+.alert.error {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+}
+
+.alert.warning {
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+    color: #856404;
+}
+
+.alert i {
+    margin-right: 10px;
+}
+
+.alert button {
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.alert button:hover {
+    text-decoration: underline;
+}
+
+/* Styling for labels */
+label {
+    font-weight: 600;
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+/* Additional Styling for Picklist */
+.p-picklist {
+    margin-top: 20px;
+}
+
+.p-picklist .p-picklist-source, .p-picklist .p-picklist-target {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.p-picklist .p-picklist-source .p-picklist-item, .p-picklist .p-picklist-target .p-picklist-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.p-picklist .p-picklist-source .p-picklist-item:hover, .p-picklist .p-picklist-target .p-picklist-item:hover {
+    background-color: #f0f0f0;
+}
+/* Alertes personnalisées */
+.alert {
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 5px;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  transition: opacity 0.3s ease;
+}
+
+.alert.error {
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+}
+
+.alert.success {
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  color: #155724;
+}
+
+.alert.warning {
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+  color: #856404;
+}
+
+.alert i {
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+.alert button {
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.alert button:hover {
+  text-decoration: underline;
+}
+
+/* Animation d'apparition pour l'alerte */
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
+  }
+}
+
+.alert {
+  animation: fadeIn 0.5s ease-out;
+}

@@ -1,0 +1,125 @@
+/* Styles globaux pour le corps et le fond */
+html, body {
+    padding: 20px;
+    margin: 0;
+    background-color: #fefdfa;
+    height: 100%;
+}
+h1 {
+    font-family: 'Arial', sans-serif; /* Choix de police */
+    font-size: 2.5rem; /* Taille du texte */
+    font-weight: bold; /* Épaisseur du texte */
+    color: #5a4a42; /* Couleur beige sombre */
+    text-align: center; /* Centrer le titre */
+    margin-bottom: 1.5rem; /* Espace sous le titre */
+    text-transform: uppercase; /* Majuscules pour chaque lettre */
+    letter-spacing: 0.05em; /* Espacement des lettres */
+    border-bottom: 2px solid #dfd3c3; /* Ligne en dessous du titre */
+    padding-bottom: 0.5rem; /* Espacement intérieur sous le texte */
+}
+
+/* Conteneur principal */
+.main-container {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    padding: 10px;
+}
+
+.content-container {
+    flex: 1;
+    max-width: 900px;
+}
+
+.divider-container {
+    display: flex;
+    align-items: center;
+}
+
+.custom-divider {
+    height: 600px;
+    border-left: 2px solid #815f33;
+}
+
+.image-button-container {
+    margin-top: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.image {
+    width: 350px;
+    height: 300px;
+}
+
+/* Nom de groupe en marron */
+.vertical-align-middle {
+    color: #8B4513;
+    font-weight: bold;
+    text-decoration: underline; /* Ajoute un soulignement */
+    text-decoration-color: #8B4513; /* Couleur du soulignement */
+}
+
+/* Flèche en marron */
+.arrow {
+    fill: #8B4513; /* Change la couleur de la flèche en marron */
+}
+
+/* Bouton principal */
+.primary-cta, .detail-button, .login-button {
+    background-color: #815f33;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.primary-cta:hover, .detail-button:hover, .login-button:hover {
+    background-color: #815f33;
+}
+
+/* Bouton pour la carte popup */
+.card-button.primary {
+    background-color: #815f33;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.card-button.primary:hover {
+    background-color: #512a8f;
+}
+
+.exit-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.exit-button svg {
+    fill: #815f33;
+}
+
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

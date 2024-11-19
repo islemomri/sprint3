@@ -1,0 +1,17 @@
+<p>invite-student works!</p>
+<form #inviteForm="ngForm" (ngSubmit)="onSubmit(inviteForm)">
+    <div>
+      <label for="courseCode">Course Code:</label>
+      <input type="text" id="courseCode" name="courseCode" ngModel required>
+    </div>
+    <div>
+      <label for="studentId">Student ID:</label>
+      <input type="number" id="studentId" name="studentId" ngModel>
+    </div>
+    <div>
+      <label for="studentEmail">Student Email:</label>
+      <input type="email" id="studentEmail" name="studentEmail" ngModel>
+    </div>
+    <button type="submit">Invite Student</button>
+  </form>
+  

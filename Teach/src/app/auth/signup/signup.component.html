@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Andev Web</title>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css'>
+
+</head>
+<body>
+<div class="container" id="container">
+	
+	<div class="form-container sign-in-container">
+		<form [formGroup]="registerForm" (ngSubmit)=submitForm() >
+			<h1>S'inscrir</h1>
+			<!-- <div class="social-container">
+				<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+				<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+			</div>
+			<span>or use your account</span> -->
+            <input type="text" placeholder="nom" formControlName="nom" />
+            <input type="text" placeholder="prenom" formControlName="prenom" />
+			<input type="email" placeholder="Email" formControlName="email" />
+			<input type="password" placeholder="Mot de passe" formControlName="motDePasse"/>
+			<input type="password" placeholder="Confirmation" formControlName="confirmPassword" />
+			<a href="#" *ngIf=!test [routerLink]="['/auth','register','enseignant']">S'inscrire en tant qu'enseignant</a>
+            <a href="#" *ngIf=test [routerLink]="['/auth','register','etudiant']">S'inscrire en tant qu'étudiant</a>
+			<button type="submit" [disabled]="registerForm.invalid">S'inscrir</button>
+		</form>
+	</div>
+	<div class="overlay-container">
+		<div class="overlay">
+			
+			<div class="overlay-panel overlay-right">
+				<h1>Bienvenue !</h1>
+                <h3 *ngIf=test>Espace enseignant</h3>
+                <h3 *ngIf=!test>Espace etudiant</h3>
+				<p>Vous avez déjà un compte ?</p>
+				<button class="ghost" id="signUp" [routerLink]="['/auth','login']">Se connecter</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+  
+
+</body>
+</html>
+            

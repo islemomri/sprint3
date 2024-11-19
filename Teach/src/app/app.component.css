@@ -1,0 +1,138 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+/* Styles pour les liens et le bouton */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+.container {
+  max-width: 1050px;
+  width: 90%;
+  margin: auto;
+}
+
+.navbar {
+  width: 100%;
+  box-shadow: 0 1px 4px rgb(146 161 176 / 15%);
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 62px;
+}
+
+
+
+.navbar .nav-container li {
+  list-style: none;
+}
+
+.navbar .nav-container a {
+  text-decoration: none;
+  color: #0e2431;
+  font-weight: 500;
+  font-size: 1.2rem;
+  padding: 0.7rem;
+}
+
+.navbar .nav-container a:hover{
+    font-weight: bolder;
+}
+
+.nav-container {
+  display: block;
+  position: relative;
+  height: 60px;
+}
+
+
+
+
+
+
+.navbar .menu-items li {
+  margin-bottom: 0.1rem;
+  font-size: 1rem;
+  font-weight: 200;
+}
+
+.logo {
+  position: absolute;
+  top: 5px;
+  left: 15px;
+  font-size: 1.2rem;
+  color: black;
+  z-index:20;
+}
+
+.navbar {
+    background-color: #f8f9fa; /* Couleur de fond de la navbar */
+    padding: 10px 0;
+  }
+  
+  .nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .logo h1 {
+    margin: 0;
+    font-size: 24px;
+  }
+  
+  .button-container {
+    margin-left: auto; /* Pousse le bouton vers la droite */
+  }
+  
+  .nav-link {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .nav-link i {
+    font-size: 24px;
+  }
+  .button-container {
+    margin-left: auto; /* Aligner les boutons à droite */
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1.5rem; /* Espacement intérieur */
+    background-color: #815f33; /* Couleur de fond */
+    color: #ffffff; /* Couleur du texte */
+    border: none; /* Pas de bordure */
+    border-radius: 0.5rem; /* Coins arrondis */
+    font-size: 1rem; /* Taille de la police */
+    font-weight: bold; /* Épaisseur du texte */
+    cursor: pointer; /* Curseur en main au survol */
+    transition: background-color 0.3s, transform 0.2s; /* Animation pour l'effet au survol */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombre portée */
+}
+
+.nav-link:hover {
+    background-color: #6f4c29; /* Couleur de fond au survol */
+    transform: translateY(-2px); /* Effet de levée au survol */
+}
+
+.nav-link i {
+    margin-right: 0.5rem; /* Espacement à droite de l'icône */
+}
+
+.TeachHub{
+  color: #6f4c29;
+  font-weight: bolder;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}

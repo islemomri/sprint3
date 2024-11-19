@@ -1,0 +1,46 @@
+<body>
+    <h1><b>Liste de sous groupes</b></h1>
+<div class="main-container">
+    <!-- Colonne de gauche : Contenu -->
+    <div class="content-container">
+      
+      <div *ngFor="let sg of sgList">
+      <div class="card" >
+        
+        <p-accordion >
+          <p-accordionTab>
+            <ng-template pTemplate="header">
+              <div>
+                <i class="pi pi-tags mr-2"></i>
+                <span class="vertical-align-middle"><b>{{sg.nom}}</b></span>
+              </div>
+            </ng-template>
+            <ng-template pTemplate="content">
+                <ul>
+                <div *ngFor="let e of sg.etudiants">
+             <li> <p>{{e.email}} </p></li>
+            </div>
+        </ul>
+        <button class="primary-cta" [routerLink]="['/sous-groupe', 'addEtudiant',sg.idSousGroupe]">+Etudiant</button>
+            </ng-template>
+          </p-accordionTab>
+        </p-accordion>
+      </div>
+    </div>
+    </div>
+  
+    <!-- Divider vertical -->
+    <div class="divider-container">
+      <p-divider layout="vertical" class="custom-divider"></p-divider>
+    </div>
+  
+    <!-- Colonne de droite : Image et Bouton -->
+    <div class="image-button-container">
+      <img src="../../../assets/images/groupe.png" alt="Formation Image" class="image" />
+      
+      <button class="primary-cta" [routerLink]="['/sous-groupe', 'add']">+ Sous groupe</button>
+          
+    </div>
+
+  </div>
+</body>

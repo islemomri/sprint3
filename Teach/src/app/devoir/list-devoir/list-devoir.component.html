@@ -1,0 +1,428 @@
+<body>
+  <style>
+    .container {
+      display: flex;
+      gap: 20px;
+    }
+
+    .sidebar {
+      width: 20%;
+      background-color: #f4f4f4;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .main-content {
+      width: 75%;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .devoir-container,
+    .document-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .devoir-card,
+    .document-card {
+      background-color: #f9f9f9;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      margin: 5px;
+    }
+
+    .text-wrap {
+      margin: 13px;
+    }
+
+    .button-wrap {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px;
+    }
+
+    h1 {
+      margin-top: 0;
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 1.2em;
+      color: #333;
+    }
+
+    .course-code-box {
+      padding: 10px;
+      background-color: #e0e0e0;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+
+    /* Popup Overlay and Card */
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .card2 {
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      width: 400px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-content {
+      margin-bottom: 20px;
+    }
+
+    .card-heading {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+    }
+
+    .card-description {
+      font-size: 1.1em;
+      margin-bottom: 15px;
+    }
+
+    .card-button-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-button.primary {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .card-button.primary:hover {
+      background-color: #0056b3;
+    }
+
+    .message-error {
+      background-color: #f8d7da;
+      color: #721c24;
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 15px;
+    }
+
+    .message-icon {
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    .exit-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+    }
+
+    .exit-button svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .success-message {
+      background-color: #d4edda;
+      color: #155724;
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+
+    .error-message {
+      background-color: #f8d7da;
+      color: #721c24;
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+    .card-button.primary {
+  background-color: #28a745; /* Vert pour un bouton d'action positif */
+  color: white;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px; /* Coins arrondis */
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease; /* Transition douce sur tous les changements */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Légère ombre pour le bouton */
+  width: 100%;
+}
+
+.card-button.primary:hover {
+  background-color: #218838; /* Couleur plus foncée au survol */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Ombre plus prononcée au survol */
+  transform: translateY(-2px); /* Effet de soulèvement */
+}
+
+.card-button.primary:focus {
+  outline: none; /* Retirer le contour bleu par défaut */
+  box-shadow: 0 0 0 4px rgba(40, 167, 69, 0.4); /* Ombre verte claire lors de l'activation du bouton */
+}
+
+.card-button.primary:active {
+  background-color: #1e7e34; /* Couleur encore plus foncée quand le bouton est cliqué */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Réinitialisation de l'ombre au clic */
+  transform: translateY(0); /* Réinitialiser le soulèvement */
+}
+.file-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px; /* Espace entre les cartes */
+}
+
+.file-card {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  width: calc(33% - 16px); /* Ajustez la largeur selon le nombre de colonnes souhaité */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.pdf-iframe {
+  width: 100%;
+  height: 100px; /* Ajustez la hauteur selon vos besoins */
+  border: none;
+}
+/* Appliquer des styles à l'élément d'entrée pour le fichier */
+input[type="file"] {
+  width: 100%; /* Prendre toute la largeur disponible du conteneur parent */
+  max-width: 300px; /* Limiter la largeur maximale pour ne pas être trop large */
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd; /* Bordure fine pour le champ de fichier */
+  background-color: #f9f9f9;
+  font-size: 14px;
+  font-family: 'Arial', sans-serif;
+  margin-bottom: 10px; /* Espace entre le champ de fichier et d'autres éléments */
+  cursor: pointer;
+}
+
+input[type="file"]:focus {
+  outline: none;
+  border-color: #28a745; /* Bordure verte lors de la sélection */
+}
+
+input[type="file"]::file-selector-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+input[type="file"]::file-selector-button:hover {
+  background-color: #218838;
+}
+
+
+  </style>
+
+  <div class="container">
+    <!-- Sidebar pour le code du cours -->
+    <div class="sidebar">
+      <div *ngIf="role === 'enseignant' && courseCode" class="course-code-box">
+        <p style="font-weight: bold; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+          {{ courseNom }}
+        </p>
+        <h2 style="color: rgb(158, 10, 10); font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+          Code du cours :
+        </h2>
+        <p style="font-weight: bold;">{{ courseCode }}</p>
+        <br>
+        <div *ngIf="role === 'enseignant'">
+          <p style="color:#000B58;font-weight: bold;font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+            <i class="fa-solid fa-user" style="margin-right: 5px;"></i>Inviter un étudiant
+          </p>
+          <input type="email" [(ngModel)]="studentEmail" placeholder="Email de l'étudiant" />
+          <button (click)="inviteStudent()" class="btn btn-primary mt-2">
+            <i class="fa-solid fa-paper-plane" style="margin-right: 5px;"></i>Inviter
+          </button>
+          <div *ngIf="invitationStudentSuccess" class="success-message">{{ invitationStudentSuccess }}</div>
+          <div *ngIf="invitationStudentError" class="error-message">{{ invitationStudentError }}</div>
+        </div>
+        
+        <br>
+        
+        <div *ngIf="role === 'enseignant'">
+          <p style="color:#000B58;font-weight: bold;font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+            <i class="fa-solid fa-user" style="margin-right: 5px;"></i>Inviter un enseignant
+          </p>
+          <input type="email" [(ngModel)]="teacherEmail" placeholder="Email de l'enseignant" />
+          <button (click)="inviteTeacher()" class="btn btn-primary mt-2">
+            <i class="fa-solid fa-paper-plane" style="margin-right: 5px;"></i>Inviter
+          </button>
+          <div *ngIf="invitationTeacherSuccess" class="success-message">{{ invitationTeacherSuccess }}</div>
+          <div *ngIf="invitationTeacherError" class="error-message">{{ invitationTeacherError }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contenu principal pour les devoirs et documents -->
+    <div class="main-content">
+      <!-- Liste des devoirs -->
+      <h1><b>Liste des devoirs</b></h1>
+      <div class="devoir-container">
+        <div *ngFor="let devoir of devoirs" class="devoir-card">
+          <div class="card">
+            <div class="text-wrap">
+              <p class="text-content">
+                <strong>{{ devoir.typedevoir }}</strong><br>
+                <a class="text-link" href="#"><b>Pondération : </b>{{ devoir.ponderation }}</a><br>
+                <a class="text-link" href="#"><b>Statut : </b>{{ devoir.statut }}</a><br>
+                {{ devoir.description }}
+              </p>
+              <p class="time">{{ devoir.dateLimite }}</p>
+            
+    <p><strong>Max Documents :</strong>
+      <span *ngIf="devoir.maxDocuments !== null && devoir.maxDocuments !== undefined; else noMaxDocuments">
+        {{ devoir.maxDocuments }}
+      </span>
+      <ng-template #noMaxDocuments>Non spécifié</ng-template>
+    </p>
+    
+            </div>
+            <div class="button-wrap">
+              <button class="primary-cta" (click)="downloadPDF(devoir.idDevoir)">Télécharger</button>
+              <div *ngIf="test">
+                <button class="primary-cta" [routerLink]="['/devoirs', 'update', devoir.idDevoir]">Modifier</button>
+              </div>
+              <div *ngIf="test">
+                <button class="primary-cta" [routerLink]="['/devoirRendu', 'list', devoir.idDevoir]">Comptes rendues</button>
+              </div>
+              <div *ngIf="!test">
+                <button class="primary-cta" (click)="showPopup(devoir.idDevoir)">Compte rendu</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Liste des documents -->
+      <h1><b>Liste des documents</b></h1>
+      <div class="document-container">
+        <div *ngFor="let doc of documentsList" class="document-card">
+          <div class="card">
+            <div class="text-wrap">
+              <p class="text-content">
+                <strong>{{ doc.name }}</strong><br>
+              </p>
+              <button class="primary-cta" (click)="viewDocument(doc.id)">Voir Document</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Popup Overlay et Formulaire -->
+  <div *ngIf="isPopupVisible" class="popup-overlay">
+    <div class="card2">
+      <!-- Formulaire pour rendre le devoir -->
+      <form *ngIf="selectedDevoir && !rendu" class="login-form" method="post" (ngSubmit)="onSubmit(f)" #f="ngForm">
+        <div class="card-content">
+          <p class="card-heading">Compte rendu</p>
+          <p class="card-description">Rendez votre devoir avant la date limite !</p>
+
+          <!-- Afficher la date limite du devoir -->
+          <p><strong>Date limite : </strong>{{ selectedDevoir.dateLimite | date: 'dd/MM/yyyy' }}</p>
+          <div *ngIf="sanitizedUrls.length > 0">
+            <h3>Fichiers sélectionnés :</h3>
+            <div *ngFor="let sanitizedUrl of sanitizedUrls">
+              <!-- Utilisation de l'URL sécurisée pour afficher les fichiers PDF -->
+              <iframe 
+                [src]="sanitizedUrl" 
+                class="pdf-iframe" 
+                frameborder="0">
+              </iframe>
+            </div>
+          </div>
+          
+          
+
+          <label *ngIf="!rendu">
+            <input type="file" (change)="onFileChange($event)" accept="application/pdf" multiple required />
+          </label>
+          <br>
+        </div>
+        <div class="card-button-wrapper">
+          <div *ngIf="!isDateExpired(selectedDevoir.dateLimite)">
+            <button class="card-button primary" type="submit">Rendre</button>
+          </div>
+          <div *ngIf="isDateExpired(selectedDevoir.dateLimite)">
+            <p>{{selectedDevoir.dateLimite}}</p>
+            <div class="message-error">
+              <div class="message-icon">
+                <i class="fa fa-exclamation-triangle"></i>
+              </div>
+              <div class="message-text">
+                <p><strong>Attention !</strong> La date limite pour rendre ce devoir est dépassée. Vous ne pouvez plus le soumettre.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <!-- Formulaire pour modifier un devoir déjà rendu -->
+      <form *ngIf="rendu" class="login-form" method="post" (ngSubmit)="updateDevoirRendu(f)" #f="ngForm">
+        <div class="card-content">
+          <p class="card-heading">Compte rendu</p>
+          <p class="card-description">Vous avez déjà rendu votre devoir</p>
+          <label>
+            <input type="file" (change)="onFileChange($event)" accept="application/pdf" multiple  required />
+          </label>
+          <br>
+        </div>
+        <div class="card-button-wrapper">
+          <button class="card-button primary" type="submit">Modifier</button>
+        </div>
+      </form>
+
+      <!-- Boutons supplémentaires pour retirer ou télécharger -->
+      <button class="card-button primary" (click)="deleteDevoirRendu()" *ngIf="rendu">Retirer</button>
+      <button class="card-button primary" (click)="downloadRenduPDF()" *ngIf="rendu">Télécharger</button>
+
+      <!-- Bouton de fermeture de la popup -->
+      <button class="exit-button" (click)="closePopup()">
+        <svg height="20px" viewBox="0 0 384 512">
+          <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</body>
