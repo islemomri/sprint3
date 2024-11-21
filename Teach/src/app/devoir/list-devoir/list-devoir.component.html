@@ -251,6 +251,7 @@ input[type="file"]::file-selector-button:hover {
 }
 
 
+
   </style>
 
   <div class="container">
@@ -328,11 +329,32 @@ input[type="file"]::file-selector-button:hover {
               <div *ngIf="!test">
                 <button class="primary-cta" (click)="showPopup(devoir.idDevoir)">Compte rendu</button>
               </div>
+              <div *ngIf="devoirNoteStatus[devoir.idDevoir]">
+                <button class="primary-cta" (click)="showEvaluationPopup(devoir)">Evaluation</button>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
+      <div *ngIf="isPopupVisibleeval" class="popup-overlay">
+        <div class="card2">
+          <h2>Evaluation</h2>
+          <div *ngIf="selectedDevoir">
+            <p><strong>Devoir:</strong> {{ selectedDevoir.typedevoir }}</p>
+            <p><strong>Date limite:</strong> {{ selectedDevoir.dateLimite | date: 'dd/MM/yyyy' }}</p>
+        
+            <!-- Afficher la note et le commentaire -->
+            <p><strong>Note:</strong> {{ evaluationNote !== null ? evaluationNote : 'Non noté' }}</p>
+            <p><strong>Commentaire:</strong> {{ evaluationcommentaire || 'Aucun commentaire' }}</p>
+          </div>
+        
+          <!-- Bouton de fermeture -->
+          <button class="exit-button" (click)="closePopupeval()">Fermer</button>
+        </div>
+      </div>
+      
+      
       <!-- Liste des documents -->
       <h1><b>Liste des documents</b></h1>
       <div class="document-container">

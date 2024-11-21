@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthService } from 'src/app/auth/service/auth.service';
 import { IDevoir } from '../model/idevoir';
-import { map, Observable } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { IDevoirDTO } from '../model/idevoir-dto';
 const BASE_URL = ["http://localhost:9099/"];
 @Injectable({
@@ -47,9 +47,14 @@ export class DevoirService {
     );
   }
 
-  getDevoirsByEtudiantId(email:string,idCours:number){
-    return this.http.get<IDevoir[]>(BASE_URL + "devoir/etudiant/"+email+"/"+idCours, { headers: this.headers! });
-
+  getDevoirsByEtudiantId(email: string, idCours: number) {
+    console.log('Appel API pour les devoirs avec email:', email, 'et idCours:', idCours); // Log des paramètres
+    return this.http.get<IDevoir[]>(BASE_URL + "devoir/etudiant/" + email + "/" + idCours, { headers: this.headers! })
+      .pipe(
+        tap((response) => {
+          console.log('Réponse de l\'API pour les devoirs:', response); // Log de la réponse
+        })
+      );
   }
 
 }

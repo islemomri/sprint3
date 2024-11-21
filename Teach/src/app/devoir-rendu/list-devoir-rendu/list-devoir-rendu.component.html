@@ -1,24 +1,25 @@
 <body>
-    <h1><b>Liste de devoirs rendues</b></h1>
-  
-    <div class="devoir-container">
-      <div *ngFor="let devoir of listDevoirRendu" class="devoir-card">
-        <div class="card">
-          <div class="container">
-            <div class="right">
-              <div class="text-wrap">
-                <p class="text-content">
-                  <strong>{{ devoir.etudiant.email }}</strong><br>
-                 <br>
-                 
-                </p>
-              </div>
-              <div class="button-wrap">
-                <button class="primary-cta" (click)="downloadRenduPDF(devoir.etudiant.email)">Télécharger</button>
-               
-                
-              </div>
-              
+  <h1><b>Liste de devoirs rendus</b></h1>
+
+  <div class="devoir-container">
+    <div *ngFor="let devoir of listDevoirRendu" class="devoir-card">
+      <div class="card">
+        <div class="container">
+          <div class="right">
+            <div class="text-wrap">
+              <p class="text-content">
+                <strong>{{ devoir.etudiant.email }}</strong><br>
+                <strong *ngIf="devoir.note !== null">Note: {{ devoir.note }}</strong><br><br>
+                <strong *ngIf="devoir.commentaire !== null">Commentaire: {{ devoir.commentaire}} </strong><br><br>
+              </p>
+            </div>
+            <div class="button-wrap">
+              <button class="primary-cta" (click)="downloadRenduPDF(devoir.etudiant.email)">Télécharger</button>
+              <a [routerLink]="['/devoirRendu/evaluer', devoir.idDevoirRendu,this.id]" class="primary-cta">Évaluer ce devoir</a>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</body>

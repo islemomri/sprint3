@@ -2,6 +2,7 @@ package com.project.app.services.jwt;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.project.app.dto.DevoirRenduDTO;
 import com.project.app.dto.DevoirRenduResponse;
+import com.project.app.dto.EvaluationDTO;
 import com.project.app.models.Devoir;
 import com.project.app.models.DevoirRendu;
 import com.project.app.models.Etudiant;
@@ -181,6 +183,29 @@ public class DevoirRenduService implements IDevoirRenduService{
 		this.devoirRenduRepository.delete(d);
 		        }});
 		
+	}
+	
+	@Transactional
+	public DevoirRendu evaluerDevoir(EvaluationDTO evaluationDTO) {
+	    DevoirRendu devoirRendu = devoirRenduRepository.findById(evaluationDTO.getIdDevoirRendu())
+	            .orElseThrow(() -> new IllegalArgumentException("Devoir rendu non trouvé"));
+
+	    devoirRendu.setNote(evaluationDTO.getNote());
+	    devoirRendu.setCommentaire(evaluationDTO.getCommentaire());
+
+	    
+
+	    return devoirRenduRepository.save(devoirRendu);
+	}
+
+
+
+
+	
+	public Optional<DevoirRendu> findByDevoirIdAndEtudiantEmail(Long idDevoir, String email) {
+	    return devoirRenduRepository.findAll().stream()
+	            .filter(dr -> dr.getDevoir().getIdDevoir().equals(idDevoir) && dr.getEtudiant().getEmail().equals(email))
+	            .findFirst();
 	}
 
 }

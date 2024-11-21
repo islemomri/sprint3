@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { AuthService } from 'src/app/auth/service/auth.service';
 import { IDevoirRendu } from '../model/idevoir-rendu';
 import { catchError, map, Observable, throwError } from 'rxjs';
+import { EvaluationDTO } from '../model/evaluation-dto';
 
 const BASE_URL = ["http://localhost:9099/"];
 @Injectable({
@@ -47,6 +48,24 @@ export class DevoirRenduService {
   }
  
   checkDevoirRendu(id: number,email:string){
-    return this.http.get(BASE_URL + `CheckDevoirRendu/${id}/${email}`,{headers:this.headers!, responseType: 'text'});
+    return this.http.get(BASE_URL + `devoirRendu/${id}/${email}`,{headers:this.headers!, responseType: 'text'});
   }
+
+  evaluerDevoir(evaluation: EvaluationDTO): Observable<IDevoirRendu> {
+    return this.http.post<IDevoirRendu>(BASE_URL + "evaluerDevoir", evaluation, { headers: this.headers! });
+  }
+
+  getEvaluation(idDevoir: number, email: string): Observable<EvaluationDTO> {
+    return this.http.get<EvaluationDTO>(BASE_URL + `devoirRendu/evaluation/${idDevoir}/${email}`);
+  }
+  
+  getDevoirRenduById1(idDevoirRendu: number, email: string): Observable<IDevoirRendu | null> {
+    return this.http.get<IDevoirRendu>(BASE_URL+`devoirRendu/${idDevoirRendu}/${email}`); }
+
+
+    getDevoirRendubyetudiantdevoir(idDevoir: number, email: string): Observable<IDevoirRendu> {
+      console.log(`Récupération du devoir rendu pour l'étudiant ${email}, devoir ${idDevoir}`);
+      return this.http.get<IDevoirRendu>(`http://localhost:9099/devoirRendu/${idDevoir}/${email}`);
+    }
+
 }

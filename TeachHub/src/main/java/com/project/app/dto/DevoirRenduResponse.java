@@ -10,8 +10,13 @@ public class DevoirRenduResponse {
 	private Long idDevoirRendu;
 	private List<byte[]> pdfs;
 	 private String email;
+	 
+	 
+	 private String  commentaire;
+	 private Float note;
 	public Long getIdDevoirRendu() {
 		return idDevoirRendu;
+		
 	}
 	public void setIdDevoirRendu(Long idDevoirRendu) {
 		this.idDevoirRendu = idDevoirRendu;

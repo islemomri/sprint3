@@ -1,0 +1,21 @@
+<body>
+  <div class="evaluation-page">
+    <div class="form">
+      <form class="evaluation-form" (ngSubmit)="onSubmitEvaluation(f)" #f="ngForm">
+        <h2>Évaluation du Devoir</h2>
+  
+        <div class="form-group">
+          <label for="note">Note globale :</label>
+          <input type="number" id="note" [(ngModel)]="evaluation.note" name="note" required>
+        </div>
+  
+        <div class="form-group">
+          <label for="commentaire">Commentaire :</label>
+          <textarea id="commentaire" [(ngModel)]="evaluation.commentaire" name="commentaire" required></textarea>
+        </div>
+  
+        <button type="submit" class="submit-button">Soumettre l'Évaluation</button>
+      </form>
+    </div>
+  </div>
+</body>

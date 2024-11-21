@@ -20,14 +20,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 
 import com.project.app.dto.DevoirRenduDTO;
-
+import com.project.app.dto.EvaluationDTO;
 import com.project.app.models.DevoirRendu;
 import com.project.app.services.jwt.DevoirRenduService;
 
@@ -184,5 +184,45 @@ public class DevoirRenduController {
 	    }else {
 	    	return ResponseEntity.status(HttpStatus.NOT_FOUND).body("devoir n'est pas rendu");
 	    }}
+	 @PostMapping("/evaluerDevoir")
+	 public ResponseEntity<DevoirRendu> evaluerDevoir(@RequestBody EvaluationDTO evaluationDTO) {
+	     try {
+	         System.out.println("Évaluation reçue : " + evaluationDTO); // Journalisation
+	         DevoirRendu evaluatedDevoir = devoirRenduService.evaluerDevoir(evaluationDTO);
+	         return ResponseEntity.ok(evaluatedDevoir);
+	     } catch (Exception e) {
+	         e.printStackTrace();
+	         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+	     }
+	 }
+
+
+
 	 
+	 @GetMapping("/devoirRendu/evaluation/{idDevoir}/{email}")
+	 public ResponseEntity<EvaluationDTO> getEvaluation(@PathVariable Long idDevoir, @PathVariable String email) {
+	     DevoirRendu devoirRendu = devoirRenduService.findByDevoirIdAndEtudiantEmail(idDevoir, email)
+	             .orElseThrow(() -> new IllegalArgumentException("Devoir rendu non trouvé"));
+
+	     EvaluationDTO evaluationDTO = new EvaluationDTO();
+	     evaluationDTO.setIdDevoirRendu(devoirRendu.getIdDevoirRendu());
+	     evaluationDTO.setNote(devoirRendu.getNote());
+	     evaluationDTO.setCommentaire(devoirRendu.getCommentaire());
+
+	     return ResponseEntity.ok(evaluationDTO);
+	 }
+	 
+	 @GetMapping("/devoirRendu/{idDevoir}/{email}")
+	 public ResponseEntity<DevoirRenduDTO> getDevoirRendu(@PathVariable Long idDevoir, @PathVariable String email) {
+	     DevoirRendu devoirRendu = devoirRenduService.findByDevoirIdAndEtudiantEmail(idDevoir, email)
+	             .orElseThrow(() -> new IllegalArgumentException("Devoir rendu non trouvé"));
+
+	     DevoirRenduDTO devoirRenduDTO = new DevoirRenduDTO();
+	     devoirRenduDTO.setIdDevoirRendu(devoirRendu.getIdDevoirRendu());
+	     devoirRenduDTO.setNote(devoirRendu.getNote());
+	     devoirRenduDTO.setCommentaire(devoirRendu.getCommentaire());
+	     // Ajoutez les autres champs nécessaires
+
+	     return ResponseEntity.ok(devoirRenduDTO);
+	 }
 }

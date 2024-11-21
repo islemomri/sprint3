@@ -11,12 +11,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ListDevoirRenduComponent implements OnInit{
   listDevoirRendu!:any[];
+  idDevoir!: number;
+  id!: number;
   constructor(private service:DevoirRenduService,private router:Router,private activatedRoute:ActivatedRoute){}
    
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((parametres) => {
-      const id = +parametres['id']; // Convert the parameter to a number
-      this.service.getAllDevoirsRendu(id).subscribe((dev) => {
+      this.id = +parametres['id']; // Convert the parameter to a number
+      this.service.getAllDevoirsRendu(this.id).subscribe((dev) => {
         this.listDevoirRendu = dev;
         console.log(dev);
       });
@@ -33,4 +35,14 @@ export class ListDevoirRenduComponent implements OnInit{
        a.click();
      });
    }
+
+   viewDevoirDetails(devoir: IDevoirRendu): void {
+    this.service.getDevoirRenduById1(devoir.idDevoirRendu, devoir.etudiant.email).subscribe((data) => {
+      if (data) {
+        alert(`Note: ${data.note}\nCommentaire: ${data.commentaire}`);
+      } else {
+        alert('Impossible de récupérer les détails du devoir.');
+      }
+    });
+  }
  }

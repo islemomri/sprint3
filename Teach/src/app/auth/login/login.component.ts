@@ -35,7 +35,7 @@ export class LoginComponent {
           console.log(response.role);
           localStorage.setItem("id",response.id)
           
-          alert("Hello, Your token is " + response.jwt);
+          alert("Hello, welcome " );
           const jwtToken = response.jwt;
           localStorage.setItem('jwt', jwtToken);
           this.router.navigateByUrl("cours");

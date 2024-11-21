@@ -29,6 +29,9 @@ public class DevoirRendu {
 	 @ManyToOne
 	 @JoinColumn(name = "id_devoir", nullable = false)
 	 private Devoir devoir;
+	 private String  commentaire;
+	 private Float note;
+	 
 	 
 	 @ManyToOne(fetch=FetchType.EAGER)
 	 @JoinColumn(name="etudiant_id")
@@ -67,6 +70,24 @@ public class DevoirRendu {
 	public void setEtudiant(Etudiant etudiant) {
 		this.etudiant = etudiant;
 	}
+
+	public String getCommentaire() {
+		return commentaire;
+	}
+
+	public void setCommentaire(String commentaire) {
+		this.commentaire = commentaire;
+	}
+
+	public Float getNote() {
+		return note;
+	}
+
+	public void setNote(Float note) {
+		this.note = note;
+	}
+
+	
 	
 	 
 

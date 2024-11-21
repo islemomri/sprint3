@@ -31,6 +31,7 @@ export class ListDevoirComponent implements OnInit, DoCheck {
   subbmited = false;
   studentEmail: string = '';
   teacherEmail: string = '';
+  devoirNoteStatus: { [key: number]: boolean } = {};
   // Variables pour gérer les messages de succès et d'erreur
 invitationStudentSuccess: string = '';
 invitationStudentError: string = '';
@@ -39,9 +40,10 @@ invitationTeacherError: string = '';
 invitationStudentMessageClass: string = ''; // Classe CSS pour style de message
 invitationTeacherMessageClass: string = ''; // Classe CSS pour style de message
 selectedDevoir: IDevoir | null = null;  // Variable pour stocker le devoir sélectionné
-
+evaluationNote: number | null = null;  // To store the grade
+evaluationcommentaire: string = '';  // To store the feedback
   // Autres variables et méthodes...
-
+  isPopupVisibleeval = false;
   constructor(
     private devoirService: DevoirService,
     private devoirRService: DevoirRenduService,
@@ -59,25 +61,74 @@ selectedDevoir: IDevoir | null = null;  // Variable pour stocker le devoir séle
     this.activatedRoute.params.subscribe((params) => {
       this.courId = +params['id'];
       localStorage.setItem('idCours', params['id']);
+      console.log('Username:', localStorage.getItem("username"));
+      console.log('Course ID:', this.courId);
 
       if (this.role === 'etudiant') {
         this.devoirService.getDevoirsByEtudiantId(localStorage.getItem("username")!, this.courId)
-          .subscribe((d) => { this.devoirs = d || [] });
-          console.log("les devvvvvvvvvvvvvvvvvvvvvvvvvvvvvoirs",this.devoirs); 
-      } else {
+          .subscribe((d) => {
+            this.devoirs = d || [];
+            this.devoirs.forEach((devoir) => {
+              this.getDevoirRendu(devoir.idDevoir, localStorage.getItem("username")!);  // Retrieve the report for each devoir
+            });
+            console.log("Les devoirs récupérés :", this.devoirs);
+          });
+      }
+      else {
         this.devoirService.getAllDevoirs(this.courId)
           .subscribe((d) => {
-            // Appliquer une valeur par défaut si maxDocuments est null
             this.devoirs = d.map(devoir => ({
               ...devoir,
-              // Valeur par défaut de 5 si maxDocuments est null
             })) || [];
-            console.log("les devvvvvvvvvvvvvvvvvvvvvvvvvvvvvoirs",this.devoirs);  // Pour déboguer et vérifier les données
+            console.log("les devoirs:", this.devoirs);
           });
         this.getCourseCode();
       }
     });
   }
+
+
+  
+  showEvaluationPopup(devoir: IDevoir): void {
+    this.selectedDevoir = devoir;
+    
+    // Fetch the devoir rendu (submitted assignment) for the specific student and devoir
+    this.devoirRService.getDevoirRendubyetudiantdevoir(devoir.idDevoir, localStorage.getItem("username")!)
+      .subscribe(
+        (devoirRendu) => {
+          // Log the devoir rendu (submitted assignment) data for debugging
+          console.log(`Compte rendu pour le devoir ${devoir.idDevoir}:`, devoirRendu);
+  
+          // Check if the note exists and update the status for the devoir
+          if (devoirRendu.note !== null && devoirRendu.note !== undefined) {
+            this.devoirNoteStatus[devoir.idDevoir] = true;  // Mark as true if a note exists
+          } else {
+            this.devoirNoteStatus[devoir.idDevoir] = false;  // Mark as false if no note
+          }
+  
+          // Assign the fetched note and feedback (commentaire)
+          this.evaluationNote = devoirRendu.note;  // Assuming 'note' is part of the devoir rendu data
+          this.evaluationcommentaire = devoirRendu.commentaire || '';  // Assuming 'commentaire' is part of the devoir rendu data
+  
+          // Show the popup with the evaluation details
+          this.isPopupVisibleeval = true;
+        },
+        (error) => {
+          console.error('Erreur lors de la récupération du compte rendu:', error);
+          // Optionally, handle errors here (show an error message)
+        }
+      );
+  }
+  
+
+  closePopupeval(): void {
+    this.isPopupVisibleeval = false;  // Masquer la popup
+    window.close();
+  }
+  
+  
+
+
   isDateExpired(dateLimite: any): boolean {
     const currentDate = new Date();
     currentDate.setHours(0, 0, 0, 0); // Réinitialiser l'heure à 00:00:00
@@ -91,7 +142,52 @@ selectedDevoir: IDevoir | null = null;  // Variable pour stocker le devoir séle
     console.log('Est-ce que la date limite est dépassée ? ', isExpired);
     return isExpired;
   }
+
+
+
+  getDevoirRendu(idDevoir: number, email: string): void {
+    this.devoirRService.getDevoirRendubyetudiantdevoir(idDevoir, email).subscribe(
+      (devoirRendu) => {
+        // Display the report in the console
+        console.log(`Compte rendu pour le devoir ${idDevoir}:`, devoirRendu);
+
+        // Check if a note exists and update the devoirNoteStatus
+        if (devoirRendu.note !== null && devoirRendu.note !== undefined) {
+          this.devoirNoteStatus[idDevoir] = true;  // Set to true if note exists
+        } else {
+          this.devoirNoteStatus[idDevoir] = false; // Set to false if no note
+        }
+      },
+      (error) => {
+        console.error('Erreur lors de la récupération du compte rendu:', error);
+      }
+    );
+  }
+
+  /*sur(iddvr: number) {
+    const email = localStorage.getItem("username");  // Récupérer l'email de l'étudiant depuis le localStorage
   
+    if (email) {  // Vérifier si l'email est défini
+      this.devoirRService.getDevoirRendubyetudiantdevoir(iddvr, email).subscribe(
+        (devoir) => {
+          // Vérifier si la note est définie et différente de 0
+          if (devoir.note !== null && devoir.note !== undefined && devoir.note !== 0) {
+            console.log("Le compte rendu a une note.");
+            return true;  // Retourner true si la note est présente
+          } else {
+            console.log("Le compte rendu n'a pas de note.");
+            return false;  // Retourner false si la note est absente ou zéro
+          }
+        },
+        (error) => {
+          console.error("Erreur lors de la récupération du devoir:", error);
+        }
+      );
+    } else {
+      console.log("Email non trouvé dans le localStorage.");
+    }
+  }
+  */
   
   ngDoCheck(): void {
     const currentRoute = this.router.url;
@@ -188,6 +284,7 @@ selectedDevoir: IDevoir | null = null;  // Variable pour stocker le devoir séle
 closePDF() {
   // Logique pour fermer ou masquer l'iframe PDF
   this.isPopupVisible = false; // Par exemple, vous pouvez mettre une variable pour fermer le popup
+  window.history.back();
 }
   
 
