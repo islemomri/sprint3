@@ -21,7 +21,8 @@ export class EvaluationDevoirComponent implements OnInit {
   idDevoir!: number;  // Variable pour stocker l'ID du devoir récupéré de l'URL
   devoirRendu!: IDevoirRendu;  // Variable pour stocker les détails du devoir rendu
   devoir!: IDevoir;  // Variable pour stocker les détails du devoir
-
+  commentaire: string = '';  
+  
   constructor(
     private route: ActivatedRoute,
     private devoirRenduService: DevoirRenduService,
@@ -30,23 +31,26 @@ export class EvaluationDevoirComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      const idDevoirRenduString = params.get('idDevoirRendu');
+      const idDevoirRenduString =params.get('idDevoirRendu');
       const idDevoirString = params.get('id');
+      console.log('Paramètres récupérés - idDevoirRendu:', idDevoirRenduString, 'idDevoir:', idDevoirString);
+
   
       if (idDevoirRenduString && idDevoirString) {
         const idDevoirRendu = +idDevoirRenduString;
         this.idDevoir = +idDevoirString;
-
+        console.log('APres convertion number - idDevoirRendu:', idDevoirRendu, 'idDevoir:', this.idDevoir);
         // Appel pour récupérer les détails du devoir
         this.devoirserv.getDevoirById(this.idDevoir).subscribe((devoir: IDevoir | null) => {
           if (devoir) {
             this.devoir = devoir;  // Stocker les détails du devoir dans la variable `devoir`
-            console.log('Détails du devoir récupérés:', devoir);
+            this.commentaire = devoir.bareme || '';
+            console.log('Détails du devoirrrrrrrrrr récupérés:', devoir);
           } else {
             console.error('Devoir non trouvé');
           }
         });
-
+console.log('hhhhhhhhhhhhhhhh',idDevoirRendu);
         // Appel pour récupérer les détails du devoir rendu
         this.devoirRenduService.getDevoirRenduById(idDevoirRendu).subscribe((devoirRendu: IDevoirRendu | null) => {
           if (devoirRendu) {

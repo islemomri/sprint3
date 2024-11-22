@@ -37,7 +37,7 @@ export class DevoirRenduService {
   deleteDevoirRendu(id : number,email:string):Observable<string>{
     return this.http.delete(BASE_URL+"deleteDevoirRendu/"+id+"/"+email,{headers:this.headers!, responseType: 'text'})
   }
-  getDevoirRenduById(id: number): Observable<IDevoirRendu | null> {
+ /* getDevoirRenduById(id: number): Observable<IDevoirRendu | null> {
     return this.getAllDevoirsRendu(+localStorage.getItem("idDevoir")!).pipe(
       map(devoir => {
         this.devoirs=devoir;
@@ -45,8 +45,13 @@ export class DevoirRenduService {
        
       })
     );
-  }
- 
+  }*/
+    getDevoirRenduById(idDevoirRendu: number): Observable<IDevoirRendu | null> {
+      // Utilisez la concaténation de chaînes
+      const url = BASE_URL + 'devoirRendu/' + idDevoirRendu;
+      return this.http.get<IDevoirRendu | null>(url); // Retourne l'objet ou null si non trouvé
+    }
+    
   checkDevoirRendu(id: number,email:string){
     return this.http.get(BASE_URL + `devoirRendu/${id}/${email}`,{headers:this.headers!, responseType: 'text'});
   }

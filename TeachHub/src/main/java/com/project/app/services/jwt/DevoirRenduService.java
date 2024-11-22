@@ -147,7 +147,9 @@ public class DevoirRenduService implements IDevoirRenduService{
 	   
 	    return devoirRendu;
 	}
-
+	public DevoirRendu getDevoirRenduById(Long idDevoirRendu) {
+	    return devoirRenduRepository.findById(idDevoirRendu).orElse(null);
+	}
 
 
 	@Transactional

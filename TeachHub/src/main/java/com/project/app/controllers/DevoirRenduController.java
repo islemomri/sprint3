@@ -211,6 +211,22 @@ public class DevoirRenduController {
 
 	     return ResponseEntity.ok(evaluationDTO);
 	 }
+	 @GetMapping("/devoirRendu/{idDevoirRendu}")
+	 public ResponseEntity<DevoirRenduDTO> getDevoirRenduById(@PathVariable Long idDevoirRendu) {
+	     DevoirRendu devoirRendu = devoirRenduService.getDevoirRenduById(idDevoirRendu);
+	     if (devoirRendu != null) {
+	         // Convertir le devoir rendu en DTO pour le renvoyer
+	         DevoirRenduDTO devoirRenduDTO = new DevoirRenduDTO();
+	         devoirRenduDTO.setIdDevoirRendu(devoirRendu.getIdDevoirRendu());
+	         devoirRenduDTO.setNote(devoirRendu.getNote());
+	         devoirRenduDTO.setCommentaire(devoirRendu.getCommentaire());
+	         // Ajoutez d'autres propriétés du devoir rendu selon les besoins
+	         return ResponseEntity.ok(devoirRenduDTO);
+	     } else {
+	         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+	     }
+	 }
+
 	 
 	 @GetMapping("/devoirRendu/{idDevoir}/{email}")
 	 public ResponseEntity<DevoirRenduDTO> getDevoirRendu(@PathVariable Long idDevoir, @PathVariable String email) {
